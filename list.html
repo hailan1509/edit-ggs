@@ -18,7 +18,6 @@
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
             color: #343a40;
             font-weight: bold;
         }
@@ -64,6 +63,11 @@
             margin-bottom: 20px;
             font-weight: bold;
         }
+        .tongtien{
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
         .row {
             display: flex;
             justify-content: center;
@@ -103,6 +107,7 @@
 <body>
     <div class="container">
         <h1 class="header">DANH SÁCH CÔNG ĐỨC ĐÌNH LÀNG TÂN KIM 2025</h1>
+        <h3 class="tongtien">Tổng tiền: <span id="tongTien">Đang tải...</span></h3>
         <p class="last-updated">Cập nhật lần cuối: <span id="lastUpdated">Đang tải...</span></p>
         <div class="row" id="userList">
             <!-- Các thẻ card sẽ được chèn vào đây -->
@@ -122,6 +127,11 @@
             })
             .then(response => response.json())
             .then(data => {
+                let tongtien = 0;
+                data.forEach(row => {
+                    if (Number.isInteger(row.sotien)) tongtien += row.sotien;
+                })
+
                 // Lấy 20 dòng mới nhất
                 const lastRows = data.slice(-DISPLAY_LIMIT).reverse();
 
@@ -148,6 +158,7 @@
                 // Cập nhật thời gian load
                 const now = new Date().toLocaleString('vi-VN');
                 document.getElementById('lastUpdated').textContent = now;
+                document.getElementById('tongTien').innerHTML = `<span class="highlight">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongtien)}</span>`;
             })
             .catch(error => {
                 console.error('Error:', error);
