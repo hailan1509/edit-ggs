@@ -8,52 +8,112 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f0f2f5;
             padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .container {
-            max-width: 1200px;
+            width: 100%; /* Đảm bảo chiều rộng luôn đầy đủ */
+            max-width: 100%; /* Giới hạn chiều rộng tối đa */
         }
-        .table-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+            font-weight: bold;
         }
-        .table thead th {
-            background-color: #007bff;
-            color: white;
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 5px;
+            margin-bottom: 5px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        .card-text strong {
+            color: #212529;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #28a745;
+        }
+        .highlight-name {
+            font-weight: bold;
+            color: #fe0707;
         }
         .last-updated {
-            font-size: 0.9em;
+            font-size: 0.9rem;
             color: #6c757d;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .col-md-3 {
+            max-width: 23%; /* Mỗi cột chiếm khoảng 1/4 chiều rộng */
+        }
+        .col-md-3 .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .number-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .info-section {
+            flex: 3;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .info-section p {
+            margin: 5px 0;
+        }
+        .info-section p strong {
+            color: #212529;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center mb-4">Danh sách người dùng</h1>
-        <div class="table-container">
-            <p class="last-updated">Cập nhật lần cuối: <span id="lastUpdated">Đang tải...</span></p>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Địa chỉ</th>
-                        <th scope="col">Số tiền</th>
-                    </tr>
-                </thead>
-                <tbody id="dataBody"></tbody>
-            </table>
+        <h1 class="header">DANH SÁCH CÔNG ĐỨC ĐÌNH LÀNG TÂN KIM 2025</h1>
+        <p class="last-updated">Cập nhật lần cuối: <span id="lastUpdated">Đang tải...</span></p>
+        <div class="row" id="userList">
+            <!-- Các thẻ card sẽ được chèn vào đây -->
         </div>
     </div>
 
-    <!-- Bootstrap JS (cần cho một số hiệu ứng) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyfA9yrLsrPeuOoMbG38qnEz8ZFxcSS3EQ796gbQ2YnQkyGxb2NCwdq9QEVxYLtitld/exec'; // Thay bằng URL Web App của bạn
-        const DISPLAY_LIMIT = 30; // Số người cuối cùng muốn hiển thị (có thể đổi thành 20)
+        const DISPLAY_LIMIT = 20; // Hiển thị tối đa 20 người
 
         // Hàm lấy và hiển thị danh sách
         function loadData() {
@@ -62,21 +122,27 @@
             })
             .then(response => response.json())
             .then(data => {
-                const tbody = document.getElementById('dataBody');
-                tbody.innerHTML = ''; // Xóa dữ liệu cũ
+                // Lấy 20 dòng mới nhất
+                const lastRows = data.slice(-DISPLAY_LIMIT).reverse();
 
-                // Lấy 30 dòng cuối cùng
-                const lastRows = data.slice(-DISPLAY_LIMIT);
-
+                // Lọc dữ liệu và hiển thị
+                const userList = document.getElementById('userList');
+                userList.innerHTML = '';
                 lastRows.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row.stt}</td>
-                        <td>${row.ten}</td>
-                        <td>${row.diachi}</td>
-                        <td>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.sotien)}</td>
+                    const card = document.createElement('div');
+                    card.className = 'col-md-3'; // Chia thành 4 cột
+                    card.innerHTML = `
+                        <div class="card">
+                            <div class="number-section">
+                                <span class="highlight">${row.ten}</span>
+                            </div>
+                            <div class="info-section">
+                                <p><strong>Địa chỉ:</strong> ${row.diachi}</p>
+                                <p><strong>Số tiền:</strong> <span class="highlight">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.sotien)}</span></p>
+                            </div>
+                        </div>
                     `;
-                    tbody.appendChild(tr);
+                    userList.appendChild(card);
                 });
 
                 // Cập nhật thời gian load
@@ -85,15 +151,16 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('dataBody').innerHTML = '<tr><td colspan="4" class="text-center text-danger">Lỗi khi tải dữ liệu</td></tr>';
+                const userList = document.getElementById('userList');
+                userList.innerHTML = '<p class="text-center text-danger">Lỗi khi tải dữ liệu</p>';
             });
         }
 
-        // Tải dữ liệu lần đầu khi mở trang
+        // Tải dữ liệu lần đầu
         loadData();
 
         // Tự động load lại mỗi 5 giây
-        setInterval(loadData, 5000);
+        // setInterval(loadData, 5000);
     </script>
 </body>
 </html>
