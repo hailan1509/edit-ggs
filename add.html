@@ -1,41 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Thêm dòng vào Google Sheet</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công đức đình Tân Kim 2025</title>
     <style>
-        .container {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
         }
+
         input {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
         }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
         button {
-            padding: 10px 20px;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 18px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            label, input, button {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 14px;
+            }
+        }
+
+        .money-display {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Spinner styling */
+        #spinner {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Overlay styling */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Thêm dữ liệu vào Google Sheet</h2>
+        <h2>CÔNG ĐỨC ĐÌNH TÂN KIM 2025</h2>
         <form id="dataForm">
             <div class="form-group">
                 <label for="ten">Tên:</label>
@@ -48,15 +137,30 @@
             <div class="form-group">
                 <label for="sotien">Số tiền:</label>
                 <input type="number" id="sotien" name="sotien" required>
+                <div id="moneyDisplay" class="money-display">Số tiền bạn đã nhập: 0</div>
             </div>
-            <button type="submit">Thêm vào Sheet</button>
+            <button type="submit">Thêm người công đức</button>
         </form>
     </div>
 
+    <!-- Spinner element -->
+    <div id="spinner"></div>
+
+    <!-- Overlay element -->
+    <div id="overlay"></div>
+
     <script>
+        // Cập nhật hiển thị số tiền khi người dùng nhập vào
+        document.getElementById('sotien').addEventListener('input', function () {
+            const sotien = this.value;
+            const moneyDisplay = document.getElementById('moneyDisplay');
+            moneyDisplay.textContent = `Số tiền bạn đã nhập: ${new Intl.NumberFormat().format(sotien)} VNĐ`;
+        });
+
         // Function này sẽ được deploy thành Web App từ Google Apps Script
         function submitToGoogleSheet(event) {
             event.preventDefault();
+
             const ten = document.getElementById('ten').value;
             const diachi = document.getElementById('diachi').value;
             const sotien = document.getElementById('sotien').value;
@@ -67,7 +171,11 @@
                 sotien: sotien
             };
 
-            // Thay YOUR_WEB_APP_URL bằng URL của Web App bạn deploy từ Apps Script
+            // Hiển thị overlay và spinner khi bắt đầu gọi API
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('spinner').style.display = 'block';
+
+            // Gọi API
             fetch('https://script.google.com/macros/s/AKfycbyfA9yrLsrPeuOoMbG38qnEz8ZFxcSS3EQ796gbQ2YnQkyGxb2NCwdq9QEVxYLtitld/exec', {
                 method: 'POST',
                 mode: 'no-cors',
@@ -77,12 +185,24 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
+                // Ẩn overlay và spinner sau khi hoàn thành
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('spinner').style.display = 'none';
+
+                // Thông báo thành công
                 alert('Đã thêm dữ liệu thành công!');
+
+                // Reset form
                 document.getElementById('dataForm').reset();
+                document.getElementById('moneyDisplay').textContent = 'Số tiền bạn đã nhập: 0';
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Có lỗi xảy ra khi thêm dữ liệu');
+                // Ẩn overlay và spinner nếu có lỗi
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('spinner').style.display = 'none';
+
+                // Thông báo lỗi
+                alert('Có lỗi xảy ra khi thêm dữ liệu!');
             });
         }
 
