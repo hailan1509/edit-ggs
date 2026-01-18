@@ -20,7 +20,7 @@
             background-size: cover;
             background-repeat: no-repeat;
             min-height: 100vh;
-            padding: 5px;
+            padding: 10px;
             font-family: 'Playfair Display', 'Noto Serif TC', serif;
             position: relative;
             overflow-x: hidden;
@@ -49,8 +49,8 @@
         /* Header Section */
         .header-wrapper {
             text-align: center;
-            margin-bottom: 10px;
-            padding: 12px 5px;
+            margin-bottom: 15px;
+            padding: 15px 10px;
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(255, 223, 0, 0.95) 100%);
             border-radius: 15px;
             box-shadow: 
@@ -64,20 +64,20 @@
         .header-wrapper::before {
             content: '⚜';
             position: absolute;
-            left: 10px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 2rem;
+            font-size: 2.5rem;
             opacity: 0.3;
         }
 
         .header-wrapper::after {
             content: '⚜';
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 2rem;
+            font-size: 2.5rem;
             opacity: 0.3;
         }
 
@@ -144,137 +144,12 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Main Content Layout - 2 Columns */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 10px;
-        }
-
-        /* Left Column - Main List */
-        .main-list-section {
-            min-width: 0;
-        }
-
+        /* Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 15px;
             margin-top: 0;
-        }
-
-        /* Right Column - Top 15 */
-        .top-donors-section {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(255, 223, 0, 0.95) 100%);
-            border-radius: 15px;
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.3),
-                inset 0 2px 10px rgba(255, 255, 255, 0.3);
-            border: 3px solid #8B0000;
-            padding: 10px;
-            position: sticky;
-            top: 10px;
-            max-height: calc(100vh - 20px);
-            overflow-y: auto;
-        }
-
-        .top-donors-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: #8B0000;
-            text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 0px #FFD700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .top-donor-item {
-            background: linear-gradient(135deg, #FFFFFF 0%, #FFF8DC 100%);
-            border-radius: 8px;
-            padding: 8px;
-            margin-bottom: 8px;
-            border: 2px solid #FFD700;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
-
-        .top-donor-item:hover {
-            transform: translateX(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .top-donor-item.top-1-item {
-            background: linear-gradient(135deg, #FFF9E6 0%, #FFE5B4 100%);
-            border: 3px solid #FFD700;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-        }
-
-        .top-donor-item.top-2-item {
-            background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);
-            border: 3px solid #C0C0C0;
-            box-shadow: 0 4px 12px rgba(192, 192, 192, 0.4);
-        }
-
-        .top-donor-item.top-3-item {
-            background: linear-gradient(135deg, #F5E6D3 0%, #E6D4B8 100%);
-            border: 3px solid #CD7F32;
-            box-shadow: 0 4px 12px rgba(205, 127, 50, 0.4);
-        }
-
-        .top-donor-rank {
-            display: inline-block;
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
-            color: #FFD700;
-            font-weight: 900;
-            font-size: 0.9rem;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 24px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        .top-donor-rank.top-1 {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #8B0000;
-            font-size: 1rem;
-            width: 28px;
-            height: 28px;
-            line-height: 28px;
-        }
-
-        .top-donor-rank.top-2 {
-            background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
-            color: #8B0000;
-        }
-
-        .top-donor-rank.top-3 {
-            background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
-            color: #FFD700;
-        }
-
-        .top-donor-name {
-            font-weight: 700;
-            font-size: 1rem;
-            color: #8B0000;
-            margin-bottom: 4px;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .top-donor-amount {
-            font-size: 1rem;
-            font-weight: 900;
-            color: #DC143C;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .donor-card {
@@ -287,8 +162,21 @@
             border: 3px solid #FFD700;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
+            animation: cardFadeIn 0.6s ease-out;
+            animation-fill-mode: both;
             height: fit-content;
         }
+
+        /* @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        } */
 
         .donor-card::before {
             content: '';
@@ -429,36 +317,17 @@
         @media (max-width: 1400px) {
             .cards-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 8px;
-            }
-
-            .main-content {
-                grid-template-columns: 1fr 260px;
-                gap: 8px;
+                gap: 12px;
             }
         }
 
         @media (max-width: 1200px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            .top-donors-section {
-                position: relative;
-                max-height: none;
-                margin-top: 10px;
-            }
-
             .cards-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 5px;
-            }
-
             .main-title {
                 font-size: 2rem;
                 letter-spacing: 2px;
@@ -488,7 +357,7 @@
 
             .cards-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                gap: 10px;
             }
 
             .donor-name {
@@ -497,9 +366,13 @@
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
             .header-wrapper {
-                padding: 10px 5px;
-                margin-bottom: 8px;
+                padding: 12px 8px;
+                margin-bottom: 10px;
             }
 
             .main-title {
@@ -528,7 +401,6 @@
 
             .cards-grid {
                 grid-template-columns: 1fr;
-                gap: 8px;
             }
         }
     </style>
@@ -551,29 +423,15 @@
             </div>
         </div>
 
-        <!-- Main Content - 2 Columns -->
-        <div class="main-content">
-            <!-- Left Column - Main List -->
-            <div class="main-list-section">
-                <div class="cards-grid" id="userList">
-                    <div class="loading">Đang tải dữ liệu</div>
-                </div>
-            </div>
-
-            <!-- Right Column - Top 15 -->
-            <div class="top-donors-section">
-                <h2 class="top-donors-title">Bảng Vàng</h2>
-                <div id="topDonorsList">
-                    <div class="loading">Đang tải...</div>
-                </div>
-            </div>
+        <!-- Cards Grid -->
+        <div class="cards-grid" id="userList">
+            <div class="loading">Đang tải dữ liệu</div>
         </div>
     </div>
 
     <script>
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyfA9yrLsrPeuOoMbG38qnEz8ZFxcSS3EQ796gbQ2YnQkyGxb2NCwdq9QEVxYLtitld/exec';
         const DISPLAY_LIMIT = 30;
-        const TOP_DONORS_LIMIT = 15;
 
         // Hàm lấy và hiển thị danh sách
         function loadData() {
@@ -588,56 +446,17 @@
                     if (Number.isInteger(row.sotien)) tongtien += row.sotien;
                 })
 
-                // Sắp xếp để lấy top 15
-                const sortedData = [...data].sort((a, b) => {
-                    const amountA = Number.isInteger(a.sotien) ? a.sotien : 0;
-                    const amountB = Number.isInteger(b.sotien) ? b.sotien : 0;
-                    return amountB - amountA;
-                });
-                const topDonors = sortedData.slice(0, TOP_DONORS_LIMIT);
-
-                // Hiển thị top 15
-                const topDonorsList = document.getElementById('topDonorsList');
-                topDonorsList.innerHTML = '';
-                
-                topDonors.forEach((row, index) => {
-                    const item = document.createElement('div');
-                    const rank = index + 1;
-                    let rankClass = '';
-                    let itemClass = 'top-donor-item';
-                    
-                    if (rank === 1) {
-                        rankClass = 'top-1';
-                        itemClass += ' top-1-item';
-                    } else if (rank === 2) {
-                        rankClass = 'top-2';
-                        itemClass += ' top-2-item';
-                    } else if (rank === 3) {
-                        rankClass = 'top-3';
-                        itemClass += ' top-3-item';
-                    }
-                    
-                    item.className = itemClass;
-                    item.innerHTML = `
-                        <div>
-                            <span class="top-donor-rank ${rankClass}">${rank}</span>
-                            <span class="top-donor-name">${row.ten}</span>
-                        </div>
-                        <div class="top-donor-amount">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(row.sotien)}</div>
-                    `;
-                    topDonorsList.appendChild(item);
-                });
-
-                // Lấy các dòng mới nhất cho danh sách chính
+                // Lấy các dòng mới nhất
                 const lastRows = data.slice(-DISPLAY_LIMIT).reverse();
 
-                // Hiển thị danh sách chính
+                // Hiển thị danh sách
                 const userList = document.getElementById('userList');
                 userList.innerHTML = '';
                 
                 lastRows.forEach((row, index) => {
                     const card = document.createElement('div');
                     card.className = 'donor-card';
+                    card.style.animationDelay = `${index * 0.05}s`;
                     card.innerHTML = `
                         <div class="donor-header">
                             <div class="donor-name">${row.ten}</div>
@@ -675,8 +494,6 @@
                 console.error('Error:', error);
                 const userList = document.getElementById('userList');
                 userList.innerHTML = '<div class="error-message">⚠️ Lỗi khi tải dữ liệu. Vui lòng thử lại sau.</div>';
-                const topDonorsList = document.getElementById('topDonorsList');
-                topDonorsList.innerHTML = '<div class="error-message">⚠️ Lỗi khi tải dữ liệu.</div>';
             });
         }
 
